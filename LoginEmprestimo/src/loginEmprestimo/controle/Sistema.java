@@ -27,7 +27,7 @@ public class Sistema {
 		// controleCarrinho = new ControleCarrinho(controleProduto, controleVenda);
 
 		controleLogin.init();
-		controleLivro.init();
+		//controleLivro.init();
 		// controleCarrinho.init(controleProduto.getRepoProduto().getProdutos());
 	}
 
@@ -74,151 +74,151 @@ public class Sistema {
 		
 	}
 
-	public void menuAtendente(){
-		int opcaoAtendente;
-		Carrinho carrinho = new Carrinho();
-		do {
-			opcaoAtendente = viewAtendente.menuPrincipal();
+	// public void menuAtendente(){
+	// 	int opcaoAtendente;
+	// 	Carrinho carrinho = new Carrinho();
+	// 	do {
+	// 		opcaoAtendente = viewAtendente.menuPrincipal();
 
-			switch (opcaoAtendente) {
+	// 		switch (opcaoAtendente) {
 
-				case 1:
-					addItemCarrinho(carrinho);
+	// 			case 1:
+	// 				addItemCarrinho(carrinho);
 
-					break;
+	// 				break;
 
-				case 2:
-					finalizarCarrinho(carrinho);
+	// 			case 2:
+	// 				finalizarCarrinho(carrinho);
 				  
-					break;
+	// 				break;
 
-				case 3:
-					viewLogin.print("VOLTANDO AO MENU");
-					viewLogin.print(" ");
-					viewLogin.print(" ");
-					break;
+	// 			case 3:
+	// 				viewLogin.print("VOLTANDO AO MENU");
+	// 				viewLogin.print(" ");
+	// 				viewLogin.print(" ");
+	// 				break;
 
-				default:
-					viewLogin.print("Opção inválida");
-					break;
+	// 			default:
+	// 				viewLogin.print("Opção inválida");
+	// 				break;
 
-			}
-		} while (opcaoAtendente != 3);
+	// 		}
+	// 	} while (opcaoAtendente != 3);
 
-	}
+	// }
 
-	public void menuAdmin() {
-		// init(sistema);
-		int opcao;
-		//int tamCod = 10; // tamanho das colunas
-		//int tamNom = 10;
-		//int tamPre = 10;
-		//int tamEsto = 10;
+	// public void menuAdmin() {
+	// 	// init(sistema);
+	// 	int opcao;
+	// 	//int tamCod = 10; // tamanho das colunas
+	// 	//int tamNom = 10;
+	// 	//int tamPre = 10;
+	// 	//int tamEsto = 10;
 
-		do {
-			opcao = viewAdmin.menuPrincipal();
+	// 	do {
+	// 		opcao = viewAdmin.menuPrincipal();
 
-			switch (opcao) {
-			case 1: // inserir
-				addProduto();
-				break;
-			case 2: // excluir
-				excluirProduto();
-				break;
+	// 		switch (opcao) {
+	// 		case 1: // inserir
+	// 			addProduto();
+	// 			break;
+	// 		case 2: // excluir
+	// 			excluirProduto();
+	// 			break;
 
-			case 3: // alterar
-				alterarProduto();
-				break;
+	// 		case 3: // alterar
+	// 			alterarProduto();
+	// 			break;
 
-			case 4: // listar produtos por codigo
-                listarProdutos();
-				break;
+	// 		case 4: // listar produtos por codigo
+    //             listarProdutos();
+	// 			break;
 
-			case 5: // listar vendas
-				listarVendas();
-				break;
+	// 		case 5: // listar vendas
+	// 			listarVendas();
+	// 			break;
 
-			case 6: // listar vendas em data
-				listarDiaVendas();
-				break;
+	// 		case 6: // listar vendas em data
+	// 			listarDiaVendas();
+	// 			break;
 
-			case 7: // detalhar venda
-				detalharVenda();
-				break;
+	// 		case 7: // detalhar venda
+	// 			detalharVenda();
+	// 			break;
             
-            case 8: // configurar tabela
-				configurarTabela();
-                break;
-			case 9:
-				cadastroUsuario();
-				break;
+    //         case 8: // configurar tabela
+	// 			configurarTabela();
+    //             break;
+	// 		case 9:
+	// 			cadastroUsuario();
+	// 			break;
 
-            case 0: // sair
+    //         case 0: // sair
 
-                break;
-			default:
-				// break;
-			}
+    //             break;
+	// 		default:
+	// 			// break;
+	// 		}
 
-		} while (opcao != 0);
+	// 	} while (opcao != 0);
 
-	}
+	// }
 
-	public void addProduto() {
-		// repassando para o controle
-		controleProduto.add();
-	}
+	// public void addProduto() {
+	// 	// repassando para o controle
+	// 	controleProduto.add();
+	// }
 
-	public void alterarProduto() {
-		controleProduto.alterar();
-	}
+	// public void alterarProduto() {
+	// 	controleProduto.alterar();
+	// }
 
-	public void excluirProduto() {
-		controleProduto.excluir();
-	}
+	// public void excluirProduto() {
+	// 	controleProduto.excluir();
+	// }
 
-    public void buscarProduto() {
-        controleProduto.buscarProduto();
-    }
+    // public void buscarProduto() {
+    //     controleProduto.buscarProduto();
+    // }
 
-	public void listarProdutos() {
-		controleProduto.listar();
-	}
+	// public void listarProdutos() {
+	// 	controleProduto.listar();
+	// }
 
-	public void listarProdutosEmOrdem() {
-		controleProduto.listarEmOrdem();
-	}
+	// public void listarProdutosEmOrdem() {
+	// 	controleProduto.listarEmOrdem();
+	// }
 
-	public void listarVendas(){
-		controleVenda.listarVendas();
-	}
+	// public void listarVendas(){
+	// 	controleVenda.listarVendas();
+	// }
 
-	public void listarDiaVendas() {
-		controleVenda.listarDiaVendas();
-	}
+	// public void listarDiaVendas() {
+	// 	controleVenda.listarDiaVendas();
+	// }
 
-	public void detalharVenda(){
-		controleVenda.detalharVenda();
-	}
-
-
-
-	public void configurarTabela(){
-		controleProduto.configurarTabela();
-	}
-
-	public void addItemCarrinho(Carrinho carrinho){
-		controleCarrinho.addItemCarrinho(carrinho);
-	}
-
-	public void finalizarCarrinho(Carrinho carrinho){
-		controleCarrinho.finalizarCarrinho(carrinho);
-	}
+	// public void detalharVenda(){
+	// 	controleVenda.detalharVenda();
+	// }
 
 
 
-	public int verificarLogin(){
-		return controleLogin.verificarLogin();
+	// public void configurarTabela(){
+	// 	controleProduto.configurarTabela();
+	// }
+
+	// public void addItemCarrinho(Carrinho carrinho){
+	// 	controleCarrinho.addItemCarrinho(carrinho);
+	// }
+
+	// public void finalizarCarrinho(Carrinho carrinho){
+	// 	controleCarrinho.finalizarCarrinho(carrinho);
+	// }
+
+
+
+	public int fazerLogin(){
+		return controleLogin.fazerLogin();
 	}
 
 	public void cadastroUsuario(){

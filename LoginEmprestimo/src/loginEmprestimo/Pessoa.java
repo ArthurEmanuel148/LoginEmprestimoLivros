@@ -1,5 +1,8 @@
 package loginEmprestimo;
 
+import loginEmprestimo.Login;
+import loginEmprestimo.Login.TipoUsuario;
+
 import java.util.Date;
 
 public class Pessoa {
@@ -19,10 +22,17 @@ public class Pessoa {
 		this.dtNasc = dtNasc;
 	}
 
-	public Pessoa(String nome, String cpf, Date dtNasc, String usuario, String senha, int tipo) {
-		this.nome = nome;
-		this.cpf = cpf;
-		this.dtNasc = dtNasc;
+	public Pessoa(String nome, String cpf, Date dtNasc, String usuario, String senha, TipoUsuario tipo) {
+		this(nome, cpf, dtNasc); // Chama o construtor da classe pai
+		this.setLogin(usuario, senha, tipo);
+	}
+
+	public void setLogin(String usuario, String senha, TipoUsuario tipo) {
+		this.login = Login.getInstance(usuario, senha, tipo);
+	}
+
+	public Login getLogin() {
+		return login;
 	}
 
 	// Getters and setters
