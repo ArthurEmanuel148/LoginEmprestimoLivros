@@ -1,19 +1,27 @@
 package loginEmprestimo.controle;
 
 
+import java.util.Date;
+
+import loginEmprestimo.DiretorProfessor;
+import loginEmprestimo.Estagiario;
 import loginEmprestimo.Login;
 import loginEmprestimo.Login.TipoUsuario;
+import loginEmprestimo.Pessoa;
 import loginEmprestimo.dados.RepositorioLogin;
+import loginEmprestimo.dados.RepositorioUsuarios;
 import loginEmprestimo.view.ViewLogin;
     
 
 public class ControleLogin {
     private RepositorioLogin repoLogin;
 	private ViewLogin viewLogin;
+    private RepositorioUsuarios repositorioUsuarios;
 
 	public ControleLogin() {
-		repoLogin = new RepositorioLogin();
-		viewLogin = new ViewLogin();
+        viewLogin = new ViewLogin();
+    repoLogin = RepositorioLogin.getInstance(); // Obtém a instância única
+
 	}
 
     //serve para pessoa realizar o login no sistema
@@ -31,33 +39,44 @@ public class ControleLogin {
     }
 
     //cadastra um novo usuario no sistema
-public void cadastroUsuario(){
-        String nome = viewLogin.lerUsuario();
-        String senha = viewLogin.lerSenha();
-        int tipoInt = viewLogin.lerTipo();
+    public void cadastrarUsuario() {
 
-        // Converte o tipo inteiro para o enum TipoUsuario
-    TipoUsuario tipo = null;
-    if (tipoInt == 1) {
-        tipo = TipoUsuario.ESTAGIARIO;
-    } else if (tipoInt == 2) {
-        tipo = TipoUsuario.DIRETORPROFESSOR;
-	} else if (tipoInt == 3){
-		tipo = TipoUsuario.ALUNO;
-	}
-
-    if (tipo != null) { // Verifica se o tipo é válido
-        Login login = Login.getInstance(nome, senha, tipo);
-        if(repoLogin.add(login)){
-            viewLogin.print("Usuário cadastrado com sucesso!");
-        } else {
-            viewLogin.print("Falha ao cadastrar usuário!");
-        }
-        
-    } else {
-        viewLogin.print("Tipo de usuário inválido.");
+        // String nome = viewLogin.lerNome();
+        // String cpf = viewLogin.lerCpf();
+        // Date dtNasc = viewLogin.lerDataNasc();
+    
+        // String usuario = viewLogin.lerUsuario();
+        // String senha = viewLogin.lerSenha();
+        // TipoUsuario tipo = viewLogin.lerTipo();
+    
+        // if (tipo != null && nome != null && cpf != null && dtNasc != null && usuario != null && senha != null) {
+        //     // Cria o login
+        //     Login login = Login.getInstance(usuario, senha, tipo);
+    
+        //     // Cria o usuário com o login associado usando getInstance
+        //     Pessoa novoUsuario = null;
+        //     if (tipo == TipoUsuario.ESTAGIARIO) {
+        //         novoUsuario = Estagiario.getInstance(nome, cpf, dtNasc, login);
+        //     } else if (tipo == TipoUsuario.DIRETORPROFESSOR) {
+        //         novoUsuario = DiretorProfessor.getInstance(nome, cpf, dtNasc, login);
+        //     }
+    
+    
+        //     if (novoUsuario != null) {
+        //             if (repositorioUsuarios.add(novoUsuario)) {
+        //                 viewLogin.print("Usuário cadastrado com sucesso!");
+        //             } else {
+        //                 viewLogin.print("Falha ao adicionar o usuário ao repositório.");
+        //             }
+    
+        //     } else {
+        //         viewLogin.print("Falha ao criar o usuário ou o login.");
+        //     }
+    
+        // } else {
+        //     viewLogin.print("Informações inválidas. Certifique-se de preencher todos os campos corretamente.");
+        // }
     }
-    };
 
     // //ve se o login bate
     // public int verificarLogin(){
@@ -76,12 +95,10 @@ public void cadastroUsuario(){
     // }
 
     public void init() {
-        TipoUsuario tipo = TipoUsuario.valueOf("ESTAGIARIO");
-        Login login = Login.getInstance("Daiana", "123", tipo);
+        Login login = Login.getInstance("Daiana", "123", TipoUsuario.ESTAGIARIO);
         repoLogin.add(login);
 
-        tipo = TipoUsuario.valueOf("DIRETORPROFESSOR");
-        Login login2 = Login.getInstance("Cleide", "123", tipo);
+        Login login2 = Login.getInstance("Cleide", "123", TipoUsuario.DIRETORPROFESSOR);
         repoLogin.add(login2);
     }
 }

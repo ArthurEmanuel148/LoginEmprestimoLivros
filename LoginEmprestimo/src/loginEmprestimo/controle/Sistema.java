@@ -1,14 +1,27 @@
 package loginEmprestimo.controle;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import loginEmprestimo.DiretorProfessor;
+import loginEmprestimo.Estagiario;
+import loginEmprestimo.Login;
+import loginEmprestimo.Login.TipoUsuario;
+import loginEmprestimo.Pessoa;
 import loginEmprestimo.view.ViewLogin;
+import loginEmprestimo.dados.RepositorioLogin;
+import loginEmprestimo.dados.RepositorioUsuarios;
 
 public class Sistema {
-    private ControleLivro controleLivro;
+    //private ControleLivro controleLivro;
+
 	// private ViewAdmin viewAdmin;
 	// private ViewAtendente viewAtendente;
 	private ViewLogin viewLogin;
 
 	private ControleLogin controleLogin;
+	private RepositorioUsuarios repositorioUsuarios;
+	private RepositorioLogin repositorioLogin;
 	// private ControleVenda controleVenda;
 	// private ControleCarrinho controleCarrinho;
 
@@ -21,12 +34,15 @@ public class Sistema {
 		// viewAtendente = new ViewAtendente();
 		viewLogin = new ViewLogin();
 
-		controleLivro = new ControleLivro();
+		//controleLivro = new ControleLivro();
+
 		// controleVenda = new ControleVenda();
 		controleLogin = new ControleLogin();
+		repositorioUsuarios = new RepositorioUsuarios();
+		repositorioLogin = RepositorioLogin.getInstance();
 		// controleCarrinho = new ControleCarrinho(controleProduto, controleVenda);
 
-		controleLogin.init();
+		init();
 		//controleLivro.init();
 		// controleCarrinho.init(controleProduto.getRepoProduto().getProdutos());
 	}
@@ -39,40 +55,59 @@ public class Sistema {
 	}
 
 	public void menuPrincipal(){
-		viewLogin.menuPrincipal();
-		int opcao;
+        viewLogin.menuPrincipal();
+        int opcao;
 
-		do {
+        do {
             opcao = viewLogin.escolhaMenu();
 
             switch (opcao) {
+                case 1: // Logar
+					Login login = controleLogin.fazerLogin();
+                    if (login != null) {
+                        // Busca a Pessoa correspondente ao login no repositório
+                        Pessoa usuarioLogado = repositorioUsuarios.buscarUsuarioPorLogin(login);
 
-                case 1:
-                    int menu = verificarLogin();
-					if (menu == 1) {
-						
-						menuAtendente();
-					} else {
-						if (menu == 2) {
-							
-							menuAdmin();
-						}
-					}
-					
+                        if (usuarioLogado != null) {
+							viewLogin.print("Login realizado com sucesso!" + usuarioLogado.getNome());
+                            switch (login.getTipo()) {
+                                case ESTAGIARIO:
+									System.out.println("estagio");
+                                    //menuEstagiario(usuarioLogado);
+                                    break;
+                                case DIRETORPROFESSOR:
+									System.out.println("direto");
+                                    //menuDiretorProfessor(usuarioLogado);
+                                    break;
+                                case ALUNO:
+                                    //menuAluno(usuarioLogado);
+                                    break;
+                                default:
+                                    viewLogin.print("Tipo de usuário inválido.");
+                            }
+                        } else {
+                            viewLogin.print("Usuário não encontrado no repositório.");
+                        }
+
+                    } else {
+                        viewLogin.print("Usuário ou senha incorretos.");
+                    }
                     break;
 
-                case 0:
-                    viewLogin.print("Programa encerrado");
+                case 2: // Cadastrar Usuário
+                    controleLogin.cadastrarUsuario();
+                    break;
+
+                case 0: // Sair
+                    viewLogin.print("Programa encerrado.");
                     break;
 
                 default:
-					viewLogin.print("Opção Inválida");
-                    break;
+                    viewLogin.print("Opção inválida.");
             }
-
         } while (opcao != 0);
-		
-	}
+    }
+	
 
 	// public void menuAtendente(){
 	// 	int opcaoAtendente;
@@ -217,13 +252,66 @@ public class Sistema {
 
 
 
-	public int fazerLogin(){
-		return controleLogin.fazerLogin();
-	}
+	// public int fazerLogin(){
+	// 	return controleLogin.fazerLogin();
+	// }
 
-	public void cadastroUsuario(){
-		controleLogin.cadastroUsuario();
-	};
+	// public void cadastroUsuario(){
+	// 	controleLogin.cadastroUsuario();
+	// };
+	public void init() {
+
+
+		
+
+		try {
+
+// Exemplo de criação de um estagiário com login
+		String nomeEstagiario = "Daiana";
+		String cpfEstagiario = "123.456.789-00";
+		 SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy"); // Define o formato da data
+		 Date dataNascEstagiario = formatoData.parse("11/11/2021"); // Analisa a string no formato correto
+		String usuarioEstagiario = "daiana1";
+		String senhaEstagiario = "123"; // Armazene a senha de forma segura (hashing)
+
+			Estagiario estagiario = Estagiario.getInstance(nomeEstagiario, cpfEstagiario, dataNascEstagiario, usuarioEstagiario, senhaEstagiario);
+			repositorioUsuarios.add(estagiario);
+			repositorioLogin.add(estagiario.getLogin());
+			// if (estagiario != null) {
+			// 	Login loginEstagiario = Login.getInstance(usuarioEstagiario, senhaEstagiario, TipoUsuario.ESTAGIARIO); // Crie o login associado
+			// 	estagiario.setLogin(loginEstagiario);
+			// }
+
+
+
+
+			// Exemplo de criação de um diretor/professor com login
+			String nomeDiretor = "Cleide";
+			String cpfDiretor = "987.654.321-11";
+        Date dataNascDiretor = formatoData.parse("11/11/2021"); // Analisa a string no formato correto
+			String usuarioDiretor = "cleide1";
+			String senhaDiretor = "123"; // Armazene a senha de forma segura (hashing)
+
+
+			DiretorProfessor diretor = DiretorProfessor.getInstance(nomeDiretor, cpfDiretor, dataNascDiretor, usuarioDiretor, senhaDiretor);
+			repositorioUsuarios.add(diretor);
+			System.out.println("add");
+			repositorioLogin.add(diretor.getLogin());
+			System.out.println("add");
+			// if (diretor != null) {
+			// 	Login loginDiretor = Login.getInstance(usuarioDiretor, senhaDiretor, TipoUsuario.DIRETORPROFESSOR); // Crie o login associado
+			// 	diretor.setLogin(loginDiretor);
+			// }
+
+
+		} catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+
+
+
+
+	}
 }
 
 

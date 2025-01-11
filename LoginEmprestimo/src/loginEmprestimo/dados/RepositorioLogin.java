@@ -5,6 +5,19 @@ import loginEmprestimo.Login;
 public class RepositorioLogin {
     private Login[] logins = new Login[10];
     private int numLogins;
+        private static RepositorioLogin instance; // Instância única
+        // ... (seus atributos e outros métodos)
+    
+        private RepositorioLogin() {
+            // ... (inicialização dos seus atributos)
+        }
+    
+        public static synchronized RepositorioLogin getInstance() { // Método estático para obter a instância
+            if (instance == null) {
+                instance = new RepositorioLogin();
+            }
+            return instance;
+        }
 
     public boolean add(Login login) {
 
@@ -35,7 +48,7 @@ public class RepositorioLogin {
                 System.out.println(usuario + " " + senha);
                 String testeUsuario = logins[i].getUsuario();
                 String testeSenha = logins[i].getSenha();
-                if (testeUsuario == usuario && testeSenha == senha) {
+                if (testeUsuario.equals(usuario) && testeSenha.equals(senha)) {
                     return logins[i];
                 }
             }

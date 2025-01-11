@@ -1,8 +1,5 @@
 package loginEmprestimo;
 
-import loginEmprestimo.Login;
-import loginEmprestimo.Login.TipoUsuario;
-
 import java.util.Date;
 
 public class Pessoa {
@@ -12,7 +9,7 @@ public class Pessoa {
 	private String caminhoIdentidadeFrente; // So vai ser usada no oficial
 	private String caminhoIdentidadeTras; // So vai ser usada no oficial
 
-	private Login login; // A pessoa pode ter ou não login
+	
 
 	// restricao: ao criar precisa inicializar os atributos
 	//uma pessoa podde ser criada com ou sem login
@@ -22,18 +19,18 @@ public class Pessoa {
 		this.dtNasc = dtNasc;
 	}
 
-	public Pessoa(String nome, String cpf, Date dtNasc, String usuario, String senha, TipoUsuario tipo) {
-		this(nome, cpf, dtNasc); // Chama o construtor da classe pai
-		this.setLogin(usuario, senha, tipo);
-	}
+	// public Pessoa(String nome, String cpf, Date dtNasc, String usuario, String senha, TipoUsuario tipo) {
+	// 	this(nome, cpf, dtNasc); // Chama o construtor da classe pai
+	// 	this.setLogin(usuario, senha, tipo);
+	// }
 
-	public void setLogin(String usuario, String senha, TipoUsuario tipo) {
-		this.login = Login.getInstance(usuario, senha, tipo);
-	}
+	// public void setLogin(String usuario, String senha, TipoUsuario tipo) {
+	// 	this.login = Login.getInstance(usuario, senha, tipo);
+	// }
 
-	public Login getLogin() {
-		return login;
-	}
+	// public Login getLogin() {
+	// 	return login;
+	// }
 
 	// Getters and setters
 	public String getNome() {
