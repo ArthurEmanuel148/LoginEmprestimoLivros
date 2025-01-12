@@ -11,8 +11,8 @@ public class DiretorProfessor extends PessoaComLogin {
     }
 
 
-    public static DiretorProfessor getInstance(String nome, String cpf, Date dtNasc, String usuarioLogin, String senhaLogin) {
-        return new DiretorProfessor(nome, cpf, dtNasc, usuarioLogin, senhaLogin, TipoUsuario.DIRETORPROFESSOR); // Passa o tipo aqui
+    public static DiretorProfessor getInstance(String nome, String cpf, Date dtNasc, String usuarioLogin, String senhaLogin, TipoUsuario tipo) {
+        return new DiretorProfessor(nome, cpf, dtNasc, usuarioLogin, senhaLogin, tipo); // Passa o tipo aqui
     }
 }
 

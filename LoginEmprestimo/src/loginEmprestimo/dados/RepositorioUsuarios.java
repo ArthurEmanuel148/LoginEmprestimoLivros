@@ -14,7 +14,7 @@ public class RepositorioUsuarios {
         usuarios = new ArrayList<>();
     }
 
-    public boolean add(Pessoa usuario) {
+    public boolean add(PessoaComLogin usuario) {
         if (usuario != null) {
             return usuarios.add(usuario); // Retorna true se a adição for bem-sucedida
         }
@@ -39,4 +39,36 @@ public class RepositorioUsuarios {
         return null; // Ou lance uma exceção se preferir
     }
 
+    // public Login verificarLogin(String usuario, String senha) {
+    //     listarLogin();
+    //     for (int i = 0; i < logins.length; i++) {
+    //         if (logins[i] != null) {
+    //             System.out.println(logins[i].getUsuario() + " " + logins[i].getSenha());
+    //             System.out.println(usuario + " " + senha);
+    //             String testeUsuario = logins[i].getUsuario();
+    //             String testeSenha = logins[i].getSenha();
+    //             if (testeUsuario.equals(usuario) && testeSenha.equals(senha)) {
+    //                 return logins[i];
+    //             }
+    //         }
+
+    //     }
+        
+    //     return null;
+    // }
+
+    public List<Login> getLogins() { // Retorna uma List<Login>
+        List<Login> logins = new ArrayList<>();
+
+        for (Pessoa usuario : usuarios) {
+            if (usuario instanceof PessoaComLogin) {
+                PessoaComLogin usuarioComLogin = (PessoaComLogin) usuario;
+                Login login = usuarioComLogin.getLogin();
+                if (login != null) { // Verifica se o login não é nulo
+                    logins.add(login);
+                }
+            }
+        }
+        return logins;
+    }
 }

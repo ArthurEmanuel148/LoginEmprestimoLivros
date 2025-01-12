@@ -8,6 +8,7 @@ import loginEmprestimo.Estagiario;
 import loginEmprestimo.Login;
 import loginEmprestimo.Login.TipoUsuario;
 import loginEmprestimo.Pessoa;
+import loginEmprestimo.view.ViewDiretorProfessor;
 import loginEmprestimo.view.ViewLogin;
 import loginEmprestimo.dados.RepositorioLogin;
 import loginEmprestimo.dados.RepositorioUsuarios;
@@ -20,8 +21,10 @@ public class Sistema {
 	private ViewLogin viewLogin;
 
 	private ControleLogin controleLogin;
+	private ControleFuncionario controleFuncionario;;
 	private RepositorioUsuarios repositorioUsuarios;
 	private RepositorioLogin repositorioLogin;
+	private ViewDiretorProfessor viewDiretorProfessor;
 	// private ControleVenda controleVenda;
 	// private ControleCarrinho controleCarrinho;
 
@@ -33,12 +36,16 @@ public class Sistema {
 		// viewAdmin = new ViewAdmin();
 		// viewAtendente = new ViewAtendente();
 		viewLogin = new ViewLogin();
+		viewDiretorProfessor = new ViewDiretorProfessor();
 
 		//controleLivro = new ControleLivro();
-
+repositorioUsuarios = new RepositorioUsuarios();
 		// controleVenda = new ControleVenda();
-		controleLogin = new ControleLogin();
-		repositorioUsuarios = new RepositorioUsuarios();
+		controleLogin = new ControleLogin(repositorioUsuarios);
+		controleFuncionario = new ControleFuncionario(repositorioUsuarios);
+
+
+		
 		repositorioLogin = RepositorioLogin.getInstance();
 		// controleCarrinho = new ControleCarrinho(controleProduto, controleVenda);
 
@@ -77,7 +84,7 @@ public class Sistema {
                                     break;
                                 case DIRETORPROFESSOR:
 									System.out.println("direto");
-                                    //menuDiretorProfessor(usuarioLogado);
+                                    menuDiretorProfessor(usuarioLogado);
                                     break;
                                 case ALUNO:
                                     //menuAluno(usuarioLogado);
@@ -108,6 +115,68 @@ public class Sistema {
         } while (opcao != 0);
     }
 	
+	public void menuDiretorProfessor(Pessoa usuarioLogado){
+		// implementar menu diretor professor
+		viewDiretorProfessor.menuPrincipal(usuarioLogado);
+        int opcaoDiretorProfessor;
+
+        do {
+            opcaoDiretorProfessor = viewDiretorProfessor.menuDiretorProfessor();
+
+            switch (opcaoDiretorProfessor) {
+                case 1:
+                    // cadastrarLivro
+                    // controleLivro.cadastrarLivro();
+                    break;
+
+                case 2:
+                    // remover Livro
+                    // controleLivro.removerLivro();
+                    break;
+
+                case 3:
+                    // listar Livros
+                    // viewDiretorProfessor.listarLivros(controleLivro.getRepoLivro().getLivros());
+					break;
+
+                case 4:
+                    // pesquisar Livro
+                    // viewDiretorProfessor.pesquisarLivro(controleLivro.getRepoLivro().getLivros());
+                    break;
+
+                case 5:
+                    // listar Estudantes
+                    // viewDiretorProfessor.listarEstudantes();
+                    break;
+
+                case 6:
+                    // listar Professores
+                    // viewDiretorProfessor.listarProfessores();
+                    break;
+
+                case 7:
+                    // listar Funcionarios
+                    // viewDiretorProfessor.listarFuncionarios();
+                    break;
+
+                case 8:
+				    // menu funcionarios
+					menuFuncionario();
+                    break;
+
+                case 0:
+				viewLogin.print("VOLTANDO AO MENU");
+				viewLogin.print(" ");
+				viewLogin.print(" ");
+				break;
+
+			default:
+				viewLogin.print("Opção inválida");
+				break;
+			}
+		} while (opcaoDiretorProfessor != 0);
+
+	}
 
 	// public void menuAtendente(){
 	// 	int opcaoAtendente;
@@ -274,9 +343,9 @@ public class Sistema {
 		String usuarioEstagiario = "daiana1";
 		String senhaEstagiario = "123"; // Armazene a senha de forma segura (hashing)
 
-			Estagiario estagiario = Estagiario.getInstance(nomeEstagiario, cpfEstagiario, dataNascEstagiario, usuarioEstagiario, senhaEstagiario);
+			Estagiario estagiario = Estagiario.getInstance(nomeEstagiario, cpfEstagiario, dataNascEstagiario, usuarioEstagiario, senhaEstagiario, TipoUsuario.ESTAGIARIO);
 			repositorioUsuarios.add(estagiario);
-			repositorioLogin.add(estagiario.getLogin());
+			//repositorioLogin.add(estagiario.getLogin());
 			// if (estagiario != null) {
 			// 	Login loginEstagiario = Login.getInstance(usuarioEstagiario, senhaEstagiario, TipoUsuario.ESTAGIARIO); // Crie o login associado
 			// 	estagiario.setLogin(loginEstagiario);
@@ -293,10 +362,10 @@ public class Sistema {
 			String senhaDiretor = "123"; // Armazene a senha de forma segura (hashing)
 
 
-			DiretorProfessor diretor = DiretorProfessor.getInstance(nomeDiretor, cpfDiretor, dataNascDiretor, usuarioDiretor, senhaDiretor);
+			DiretorProfessor diretor = DiretorProfessor.getInstance(nomeDiretor, cpfDiretor, dataNascDiretor, usuarioDiretor, senhaDiretor, TipoUsuario.DIRETORPROFESSOR);
 			repositorioUsuarios.add(diretor);
 			System.out.println("add");
-			repositorioLogin.add(diretor.getLogin());
+			//repositorioLogin.add(diretor.getLogin());
 			System.out.println("add");
 			// if (diretor != null) {
 			// 	Login loginDiretor = Login.getInstance(usuarioDiretor, senhaDiretor, TipoUsuario.DIRETORPROFESSOR); // Crie o login associado
@@ -311,6 +380,10 @@ public class Sistema {
 
 
 
+	}
+
+	public void menuFuncionario() {
+		controleFuncionario.menuFuncionario(); // Chama o menuFuncionario do controller
 	}
 }
 

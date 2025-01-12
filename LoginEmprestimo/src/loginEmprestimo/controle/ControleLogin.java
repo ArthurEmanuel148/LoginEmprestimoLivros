@@ -2,12 +2,14 @@ package loginEmprestimo.controle;
 
 
 import java.util.Date;
+import java.util.List;
 
 import loginEmprestimo.DiretorProfessor;
 import loginEmprestimo.Estagiario;
 import loginEmprestimo.Login;
 import loginEmprestimo.Login.TipoUsuario;
 import loginEmprestimo.Pessoa;
+import loginEmprestimo.PessoaComLogin;
 import loginEmprestimo.dados.RepositorioLogin;
 import loginEmprestimo.dados.RepositorioUsuarios;
 import loginEmprestimo.view.ViewLogin;
@@ -18,18 +20,33 @@ public class ControleLogin {
 	private ViewLogin viewLogin;
     private RepositorioUsuarios repositorioUsuarios;
 
-	public ControleLogin() {
+	public ControleLogin( RepositorioUsuarios repositorioUsuarios) {
+        this.repositorioUsuarios = repositorioUsuarios;
         viewLogin = new ViewLogin();
-    repoLogin = RepositorioLogin.getInstance(); // Obtém a instância única
+    //repoLogin = RepositorioLogin.getInstance(); // Obtém a instância única
 
 	}
+
+    // //serve para pessoa realizar o login no sistema
+    // public Login fazerLogin() { // Retorna o objeto Login se sucesso, ou null se falha
+    //     String usuario = viewLogin.lerUsuario();
+    //     String senha = viewLogin.lerSenha();
+
+    //     Login[] logins = repoLogin.getLogins();
+    //     for (Login login : logins) {
+    //         if (login != null && login.getUsuario().equalsIgnoreCase(usuario) && login.getSenha().equalsIgnoreCase(senha)) {
+    //             return login; // Login bem-sucedido
+    //         }
+    //     }
+    //     return null; // Login falhou
+    // }
 
     //serve para pessoa realizar o login no sistema
     public Login fazerLogin() { // Retorna o objeto Login se sucesso, ou null se falha
         String usuario = viewLogin.lerUsuario();
         String senha = viewLogin.lerSenha();
 
-        Login[] logins = repoLogin.getLogins();
+        List<Login> logins = repositorioUsuarios.getLogins();
         for (Login login : logins) {
             if (login != null && login.getUsuario().equalsIgnoreCase(usuario) && login.getSenha().equalsIgnoreCase(senha)) {
                 return login; // Login bem-sucedido
@@ -41,41 +58,37 @@ public class ControleLogin {
     //cadastra um novo usuario no sistema
     public void cadastrarUsuario() {
 
-        // String nome = viewLogin.lerNome();
-        // String cpf = viewLogin.lerCpf();
-        // Date dtNasc = viewLogin.lerDataNasc();
+        String nome = viewLogin.lerNome();
+        String cpf = viewLogin.lerCpf();
+        Date dtNasc = viewLogin.lerDataNasc();
     
-        // String usuario = viewLogin.lerUsuario();
-        // String senha = viewLogin.lerSenha();
-        // TipoUsuario tipo = viewLogin.lerTipo();
+        String usuario = viewLogin.lerUsuario();
+        String senha = viewLogin.lerSenha();
+        TipoUsuario tipo = viewLogin.lerTipo();
+
     
-        // if (tipo != null && nome != null && cpf != null && dtNasc != null && usuario != null && senha != null) {
+        if (tipo != null && nome != null && cpf != null && dtNasc != null && usuario != null && senha != null) {
         //     // Cria o login
         //     Login login = Login.getInstance(usuario, senha, tipo);
     
-        //     // Cria o usuário com o login associado usando getInstance
-        //     Pessoa novoUsuario = null;
-        //     if (tipo == TipoUsuario.ESTAGIARIO) {
-        //         novoUsuario = Estagiario.getInstance(nome, cpf, dtNasc, login);
-        //     } else if (tipo == TipoUsuario.DIRETORPROFESSOR) {
-        //         novoUsuario = DiretorProfessor.getInstance(nome, cpf, dtNasc, login);
-        //     }
-    
-    
-        //     if (novoUsuario != null) {
-        //             if (repositorioUsuarios.add(novoUsuario)) {
-        //                 viewLogin.print("Usuário cadastrado com sucesso!");
-        //             } else {
-        //                 viewLogin.print("Falha ao adicionar o usuário ao repositório.");
-        //             }
-    
-        //     } else {
-        //         viewLogin.print("Falha ao criar o usuário ou o login.");
-        //     }
-    
-        // } else {
-        //     viewLogin.print("Informações inválidas. Certifique-se de preencher todos os campos corretamente.");
-        // }
+             // Cria o usuário com o login associado usando getInstance
+             
+             if (tipo == TipoUsuario.ESTAGIARIO) {
+                Estagiario novoEstagiario = Estagiario.getInstance(nome, cpf, dtNasc, usuario, senha, tipo);
+                repositorioUsuarios.add(novoEstagiario);
+                    //repoLogin.add(novoEstagiario.getLogin());
+                viewLogin.print("Usuário cadastrado com sucesso!");
+             } else if (tipo == TipoUsuario.DIRETORPROFESSOR) {
+                DiretorProfessor novoDiretorProfessor = DiretorProfessor.getInstance(nome, cpf, dtNasc, usuario, senha, tipo);
+                repositorioUsuarios.add(novoDiretorProfessor);
+                    //repoLogin.add(novoDiretorProfessor.getLogin());
+                viewLogin.print("Usuário cadastrado com sucesso!");
+             } else {
+                viewLogin.print("Falha ao adicionar o usuário ao repositório.");
+             }
+        } else {
+            viewLogin.print("Informações inválidas. Certifique-se de preencher todos os campos corretamente.");
+        }
     }
 
     // //ve se o login bate
@@ -94,11 +107,11 @@ public class ControleLogin {
     //     return 0;
     // }
 
-    public void init() {
-        Login login = Login.getInstance("Daiana", "123", TipoUsuario.ESTAGIARIO);
-        repoLogin.add(login);
+    // public void init() {
+    //     Login login = Login.getInstance("Daiana", "123", TipoUsuario.ESTAGIARIO);
+    //     repoLogin.add(login);
 
-        Login login2 = Login.getInstance("Cleide", "123", TipoUsuario.DIRETORPROFESSOR);
-        repoLogin.add(login2);
-    }
+    //     Login login2 = Login.getInstance("Cleide", "123", TipoUsuario.DIRETORPROFESSOR);
+    //     repoLogin.add(login2);
+    // }
 }

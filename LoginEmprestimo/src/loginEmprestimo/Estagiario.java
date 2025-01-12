@@ -11,7 +11,7 @@ public class Estagiario extends PessoaComLogin{
         // ... inicialização de outros atributos ...
     }
 
-    public static Estagiario getInstance(String nome, String cpf, Date dtNasc,String usuarioLogin, String senhaLogin) {
-        return new Estagiario(nome, cpf, dtNasc, usuarioLogin, senhaLogin, TipoUsuario.DIRETORPROFESSOR);
+    public static Estagiario getInstance(String nome, String cpf, Date dtNasc,String usuarioLogin, String senhaLogin, TipoUsuario tipo) {
+        return new Estagiario(nome, cpf, dtNasc, usuarioLogin, senhaLogin, tipo);
     }
 }
